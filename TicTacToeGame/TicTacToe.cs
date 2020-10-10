@@ -8,8 +8,9 @@ namespace TicTacToeGame
         {
             Console.WriteLine("Welcome to Tic Tac Toe Game!");
             char[] board=CreateBoard();
-            chooseInput();
+            //char input = chooseInput();
             showBoard(board);
+            getBoxNum(board);
         }
         public static char[] CreateBoard()
         {
@@ -21,13 +22,14 @@ namespace TicTacToeGame
             Console.WriteLine("Board Created");
             return board;
         }
-        public static void chooseInput()
+        public static char chooseInput()
         {
+            string input="";
             bool val = true;
             while (val)
             {
                 Console.WriteLine("Choose X or O");
-                string input = (Console.ReadLine());
+                input = (Console.ReadLine());
                 if (char.ToUpper(input[0]) == 'X' | char.ToUpper(input[0]) == 'O')
                 {
                     Console.WriteLine("You chose " + char.ToUpper(input[0]));
@@ -36,6 +38,7 @@ namespace TicTacToeGame
                 else
                     Console.WriteLine("Invalid Input");
             }
+            return char.ToUpper(input[0]);
         }
         public static void showBoard(char[] board)
         {
@@ -45,5 +48,19 @@ namespace TicTacToeGame
             Console.WriteLine("-------");
             Console.WriteLine(" " + "|" + board[6] + "|" + board[7] + "|" + board[8]);
         }
+        public static void getBoxNum(char[] board)
+        {
+            int[] box = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+            Console.WriteLine("Where do you wanna enter(1-9): ");
+            int index = Convert.ToInt32(Console.ReadLine());
+            if (board[index - 1] == ' ')
+            {
+                board[index - 1] = chooseInput();
+            }
+            else
+                Console.WriteLine("Index already taken");
+            showBoard(board);
+        }
+        
     }
 }
