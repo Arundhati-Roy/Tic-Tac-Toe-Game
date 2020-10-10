@@ -23,9 +23,21 @@ namespace TicTacToeGame
         }
         public static void chooseInput()
         {
-            Console.WriteLine("Choose X or O");
-            char input = Convert.ToChar(Console.ReadLine());
-            Console.WriteLine("You chose " + input);
+            //Console.WriteLine("Choose X or O");
+            //string input = (Console.ReadLine());
+            bool val = true;
+            while (val)
+            {
+                Console.WriteLine("Choose X or O");
+                string input = (Console.ReadLine());
+                if (char.ToUpper(input[0]) == 'X' | char.ToUpper(input[0]) == 'O')
+                {
+                    Console.WriteLine("You chose " + char.ToUpper(input[0]));
+                    val = false;
+                }
+                else
+                    Console.WriteLine("Invalid Input");
+            }
         }
         public static void showBoard(char[] board)
         {
