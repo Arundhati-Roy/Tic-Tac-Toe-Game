@@ -2,12 +2,13 @@
 
 namespace TicTacToeGame
 {
-    class Program
+    class TicTacToe
     {
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Tic Tac Toe Game!");
             CreateBoard();
+            chooseInput();
         }
         public static void CreateBoard()
         {
@@ -17,6 +18,12 @@ namespace TicTacToeGame
                 board[i-1] = ' ';
             }
             Console.WriteLine("Board Created");
+        }
+        public static void chooseInput()
+        {
+            Console.WriteLine("Choose X or O");
+            char input = Convert.ToChar(Console.ReadLine());
+            Console.WriteLine("You chose " + input);
         }
     }
 }
