@@ -23,8 +23,6 @@ namespace TicTacToeGame
         }
         public static void chooseInput()
         {
-            //Console.WriteLine("Choose X or O");
-            //string input = (Console.ReadLine());
             bool val = true;
             while (val)
             {
