@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace TicTacToeGame
 {
@@ -7,24 +8,24 @@ namespace TicTacToeGame
         static void Main(string[] args)
         {
             Console.WriteLine("Welcome to Tic Tac Toe Game!");
-            char[] board=CreateBoard();
-            //char input = chooseInput();
+            char[] board = CreateBoard();
             showBoard(board);
-            getBoxNum(board);
+            getHeadTail(board);
+            //isWinner(board, chooseInput());
         }
         public static char[] CreateBoard()
         {
             char[] board = new char[10];
-            for (int i=1;i<=10;i++)
+            for (int i = 1; i <= 10; i++)
             {
-                board[i-1] = ' ';
+                board[i - 1] = ' ';
             }
             Console.WriteLine("Board Created");
             return board;
         }
         public static char chooseInput()
         {
-            string input="";
+            string input = "";
             bool val = true;
             while (val)
             {
@@ -34,6 +35,7 @@ namespace TicTacToeGame
                 {
                     Console.WriteLine("You chose " + char.ToUpper(input[0]));
                     val = false;
+
                 }
                 else
                     Console.WriteLine("Invalid Input");
@@ -42,11 +44,11 @@ namespace TicTacToeGame
         }
         public static void showBoard(char[] board)
         {
-            Console.WriteLine("\n "+"|"+board[0]+"|"+board[1]+ "|" + board[2]);
+            Console.WriteLine("\n " + "|" + board[0] + "|" + board[1] + "|" + board[2] + "|");
             Console.WriteLine("-------");
-            Console.WriteLine(" " + "|" + board[3] + "|" + board[4] + "|" + board[5]);
+            Console.WriteLine(" " + "|" + board[3] + "|" + board[4] + "|" + board[5] + "|");
             Console.WriteLine("-------");
-            Console.WriteLine(" " + "|" + board[6] + "|" + board[7] + "|" + board[8]);
+            Console.WriteLine(" " + "|" + board[6] + "|" + board[7] + "|" + board[8] + "|");
         }
         public static void getBoxNum(char[] board)
         {
@@ -61,6 +63,30 @@ namespace TicTacToeGame
                 Console.WriteLine("Index already taken");
             showBoard(board);
         }
-        
+        public static void getHeadTail(char[] board)
+        {
+            Random random = new Random();
+            int toss = random.Next(0, 2);
+            if (toss == 0)
+            {
+                Console.WriteLine("You go first");
+                getBoxNum(board);
+            }
+            else
+            {
+                Console.WriteLine("Computer goes first");
+                //getBoxNum(board);
+                string input = "XO";
+                if (board[random.Next(1, 10)] == ' ')
+                {
+                    board[random.Next(1, 10)] = input[random.Next(0, 2)];
+                }
+                else
+                    Console.WriteLine("Index already taken");
+                showBoard(board);
+            }
+        }
+       
+
     }
 }
