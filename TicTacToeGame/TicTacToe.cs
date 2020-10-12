@@ -86,7 +86,18 @@ namespace TicTacToeGame
                 showBoard(board);
             }
         }
-       
+        public static bool isWinner(char[] b, char ch)
+        {
+            return ((b[0] == ch && b[1] == ch && b[2] == ch) ||  //top row
+                    (b[3] == ch && b[4] == ch && b[5] == ch) ||  //middle row
+                    (b[6] == ch && b[7] == ch && b[8] == ch) ||  //bottom row
+                    (b[0] == ch && b[3] == ch && b[6] == ch) ||  //first column
+                    (b[1] == ch && b[4] == ch && b[7] == ch) ||  //second column
+                    (b[2] == ch && b[5] == ch && b[8] == ch) ||  //third column
+                    (b[0] == ch && b[4] == ch && b[8] == ch) ||  //first diagonal
+                    (b[2] == ch && b[4] == ch && b[6] == ch)     //second diagonal
+                );
+        }
 
     }
 }
