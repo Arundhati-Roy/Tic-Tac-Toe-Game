@@ -10,7 +10,12 @@ namespace TicTacToeGame
             Console.WriteLine("Welcome to Tic Tac Toe Game!");
             char[] board = CreateBoard();
             showBoard(board);
-            getHeadTail(board);
+            //char userLetter = chooseInput();
+            string input =getHeadTail(board);
+            char userLetter = input[0];
+            char compLetter = input[1];
+            int comp = getCompMove(board,compLetter);
+            showBoard(board);
             //isWinner(board, chooseInput());
         }
         public static char[] CreateBoard()
@@ -23,7 +28,7 @@ namespace TicTacToeGame
             Console.WriteLine("Board Created");
             return board;
         }
-        public static char chooseInput()
+        public static char chooseInput(char[] board)
         {
             string input = "";
             bool val = true;
@@ -35,7 +40,7 @@ namespace TicTacToeGame
                 {
                     Console.WriteLine("You chose " + char.ToUpper(input[0]));
                     val = false;
-
+                    getBoxNum(board, char.ToUpper(input[0]));
                 }
                 else
                     Console.WriteLine("Invalid Input");
@@ -50,41 +55,44 @@ namespace TicTacToeGame
             Console.WriteLine("-------");
             Console.WriteLine(" " + "|" + board[6] + "|" + board[7] + "|" + board[8] + "|");
         }
-        public static void getBoxNum(char[] board)
+        public static void getBoxNum(char[] board, char userinput)
         {
             int[] box = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
             Console.WriteLine("Where do you wanna enter(1-9): ");
             int index = Convert.ToInt32(Console.ReadLine());
             if (board[index - 1] == ' ')
             {
-                board[index - 1] = chooseInput();
+                board[index - 1] = userinput;
             }
             else
                 Console.WriteLine("Index already taken");
             showBoard(board);
+            //return userinput;
         }
-        public static void getHeadTail(char[] board)
+        public static string getHeadTail(char[] board)
         {
+            int compIndex;
+            char userLetter;
+            string compLetter;
+            string str = "XO";
             Random random = new Random();
             int toss = random.Next(0, 2);
             if (toss == 0)
             {
                 Console.WriteLine("You go first");
-                getBoxNum(board);
+                userLetter =chooseInput(board);
+                compLetter = str.Trim(trimChar: userLetter);
             }
             else
             {
                 Console.WriteLine("Computer goes first");
-                //getBoxNum(board);
-                string input = "XO";
-                if (board[random.Next(1, 10)] == ' ')
-                {
-                    board[random.Next(1, 10)] = input[random.Next(0, 2)];
-                }
-                else
-                    Console.WriteLine("Index already taken");
-                showBoard(board);
+                compIndex=random.Next(0, 2);
+                compLetter = Convert.ToString(str[compIndex]);
+                board[random.Next(1, 10)] = str[compIndex];
+                Console.WriteLine("You got "+str[compIndex-1]);
+                userLetter = str[compIndex-1];
             }
+            return Convert.ToString(userLetter) + compLetter;
         }
         public static bool isWinner(char[] b, char ch)
         {
@@ -98,6 +106,19 @@ namespace TicTacToeGame
                     (b[2] == ch && b[4] == ch && b[6] == ch)     //second diagonal
                 );
         }
-
+        public static int getCompMove(char[] board,char compLetter)
+        {
+            for (int i=0;i<9;i++)
+            {
+                char[] copyBoard = board;
+                if(board[i]==' ')
+                {
+                    board[i] = compLetter;
+                    if (isWinner(copyBoard, compLetter))
+                        return i;
+                }
+            }
+            return 0;
+        }
     }
 }
