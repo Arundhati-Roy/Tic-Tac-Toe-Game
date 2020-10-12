@@ -14,7 +14,7 @@ namespace TicTacToeGame
             string input =getHeadTail(board);
             char userLetter = input[0];
             char compLetter = input[1];
-            int comp = getCompMove(board,compLetter);
+            int comp = getCompMove(board,compLetter,userLetter);
             showBoard(board);
             //isWinner(board, chooseInput());
         }
@@ -89,7 +89,7 @@ namespace TicTacToeGame
                 compIndex=random.Next(0, 2);
                 compLetter = Convert.ToString(str[compIndex]);
                 board[random.Next(1, 10)] = str[compIndex];
-                Console.WriteLine("You got "+str[compIndex-1]);
+                Console.WriteLine("You got "+str.Trim(trimChar: str[compIndex]));
                 userLetter = str[compIndex-1];
             }
             return Convert.ToString(userLetter) + compLetter;
@@ -106,15 +106,23 @@ namespace TicTacToeGame
                     (b[2] == ch && b[4] == ch && b[6] == ch)     //second diagonal
                 );
         }
-        public static int getCompMove(char[] board,char compLetter)
+        public static int getCompMove(char[] board,char compLetter,char userLetter)
         {
-            for (int i=0;i<9;i++)
+            int compMove = getWinningMove(board, compLetter);
+            if (compMove!= 0) return compMove;
+            int userMove = getWinningMove(board, userLetter);
+            if (userMove != 0) return userMove;
+            return 0;
+        }
+        public static int getWinningMove(char[] board, char letter)
+        {
+            for (int i = 0; i < 9; i++)
             {
                 char[] copyBoard = board;
-                if(board[i]==' ')
+                if (copyBoard[i] == ' ')
                 {
-                    board[i] = compLetter;
-                    if (isWinner(copyBoard, compLetter))
+                    copyBoard[i] = letter;
+                    if (isWinner(board, letter))
                         return i;
                 }
             }
